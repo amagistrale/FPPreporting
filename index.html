@@ -146,7 +146,11 @@
                 document.getElementById("TrueLoc").value = 'No';
                 //marker.setLngLat([lat, lng]).addTo(map)
             }
-          
+            
+            function redirect(){
+                window.location.href = "https://amagistrale.github.io/FPPReportingMap/"
+            }
+            
             const scriptURL = 'https://script.google.com/macros/s/AKfycbyMGnM7tqyd6PXlO5rhI5Nbpia4G2Mcn6XS-vedRctoOpd0as7pqaDpcWz6Hf86VuQ/exec'
             const form = document.forms['submit-to-google-sheet']
               
@@ -155,9 +159,9 @@
                 fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => console.log('Success!', response))
                 .catch(error => console.error('Error!', error.message));
-                window.location.href = "https://amagistrale.github.io/FPPReportingMap/"
+                setTimeout(redirect(), 5000);
                 })
-                
+            
         </script>
     </body>
 </html>
