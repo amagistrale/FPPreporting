@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset = 'utf-8'>
+        <meta name = 'viewport' content = 'width = device-width, initial-scale = 1'>
+        <title>FPP Maintenance Reporting Tool</title>
+        
+        <!--for mapbox-->
+        <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet' />
+        
+        <!--for sheetrock-->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sheetrock/1.1.4/dist/sheetrock.min.js"></script> 
+        
+        <!--FormData-->
+       
+
+    </head>
+    <body style = 'background-color: rgb(246,246,246);'>
+       
+        <!--Picture-->
+        <div style="position: relative;">
+            <img style=" width: 100%; height: auto" src = '/Users/annamagistrale/Desktop/GEOM_4005/Course_Material/3/A2Files/Meeting/General Park/images/IMG_8400.jpg' alt = "A snapping turtle with moss on it's back." width = "100% height = 30px">
+        </div>
+         <!--Banner-->
+        <div  class="banner" style="width:90px; height:130px; background-color:white; position:absolute; top: 8px; left: 30px;">
+            <img style="margin: 18px 0px 0px 15px;" src="https://www.ontarioparks.ca/images/svg/op-logo-vertical-colour.svg" width="60" height="100" alt="Ontario Parks Logo">
+        </div>
+        <!--<div style = "width:150px; height:130px; background-color:white; position:absolute; top: 8px; left: 120px;">
+            <img style="margin: 18px 0px 0px 0px"src="/Users/annamagistrale/Desktop/GEOM_4005/Course_Material/3/A2Files/Meeting/images/B_Logo_H-RGBRedBlackonLight72_130821.png " width="150" height="100"  alt="Carleton University Logo">
+        </div>-->
+        <!--Landing Page-->
+        <div class = 'div1' style="width: 90%; padding-right: 0.75rem; padding-left: .75rem; margin-right:auto; margin-left: auto;">
+        <h1 style = 'color:#0475bc; margin: 15px 0px 15px 0px; font-family: Calibri, opensans, sans-serif; font-weight: 600; font-size: 2.5rem; ' id = 'header'>Fitzroy Provincial Park's Maintenance Reporting System</h1>
+        <p style='font-family: Calibri, opensans, sans-serif; font-size: 1.1rem'>Welcome to the Fitzroy Provincial Park maintenance reporting system! This portal is a Carleton University student project that will explore the benefits to park operations by using community based mapping and citizen science. 
+             <br> Here, you can report issues such as litter on trails, full garbage bins, problems with washrooms or showers, and more. By submitting your observations, you are assisting staff with keeping Fitzroy healthy and beautiful.
+             <br>
+             <br>Kindly fill out the form below to report a minor maintenance task you encounter in the park. You can then view your submission on the next page.
+             <br> 
+             <br>
+             <b>Please Note:</b> This system is not intended for urgent maintenance issues, complaints, or emergencies. For any emergency, dial 911. Otherwise call the park during posted business hours at 613-623-5159. 
+        </p>
+        </div>
+        <br>
+        <hr style="height:2px; border-width:0;color:#0475bc; background-color:#0475bc">
+        
+
+        <!--add form-->
+        <div class = 'div2' style="width: 90%; padding-right: .75rem; padding-left: .75rem">
+            <p style='font-family: Calibri, opensans, sans-serif; font-size: 1.3rem; text-align:center'><b>First click the location button and allow your location to provide us with the coordinates of the issue. </b></p>
+            <div style ="text-align:center">
+            <button style=" margin-bottom:1rem !important; cursor:pointer; display: inline-block; font-weight: 500; line-height: 2; text-align: center; vertical-align: middle; border: 1.5px solid transparent; padding: .650rem 1.25rem; border-radius: .75rem; transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; color: #FFFFFF; font-size: 1.25rem; background-color: #00834e; letter-spacing: 1.25px;" class = 'get-location' onclick = 'geolocation()'>Location</button>
+            </div>
+            <br>
+            <br>
+            <p style='font-family: Calibri, opensans, sans-serif; font-size: 1.3rem'><b>Next, fill out the form and click submit when completed.</b></p>
+            <form 
+               name="submit-to-google-sheet"
+               style="font-family: Calibri, opensans, sans-serif; font-size: 1.1rem"
+            >   
+                <label style="display: inline-block; box-sizing: border-box;" for="generalloc">From the dropdown, select your general location.</label>
+                <br>
+                <select style="display: block; width: 100%; padding: .375rem .75rem; font-family: Calibri, opensans, sans-serif; font-size: 1.1rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color:#212529; background-color: #FFFFFF; background-clip: padding-box; border: 1px solid #ced4da; appearance: none; border-radius: .25rem;" name="generalloc">
+                    <option value="TR">Two Rivers Campground</option>
+                    <option value="PG">Pine Grove Campground</option>
+                    <option value="Group">Group Picnic and Camping</option>
+                    <option value="CT">The Carp River Trail</option>
+                    <option value="TT">The Terraces Trail</option>
+                    <option value="DU">The Day-use Area</option>
+                    <option value="Other">Other</option>
+                </select> 
+                <br>
+                <br>
+                <label for="dateandtime">Enter the time and date when you noticed the issue.</label>
+                <br>
+                <input style="display: block; width: 100%; padding: .375rem .75rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color:#212529; background-color: #FFFFFF; background-clip: padding-box; border: 1px solid #ced4da; appearance: none; border-radius: .25rem;" type="datetime-local" name="dateandtime" required="Yes">
+                <br>
+                <br>
+                <label for="Location">Describe the specific area where you notied the issue (Include landmarks, campsite numbers, buildings, etc.)</label>
+                <br>
+                <input style="display: block; width: 100%; padding: .375rem .75rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color:#212529; background-color: #FFFFFF; background-clip: padding-box; border: 1px solid #ced4da; appearance: none; border-radius: .25rem;" name="Location" type="text" placeholder="Location of Issue" required>
+                <br>
+                <br>
+                <label for="IssueDescription">Describe the problem you noticed. Be as descriptive as possible.</label>
+                <br>
+                <textarea style="display: block; width: 100%; padding: .375rem .75rem; font-size: 1rem; font-weight: 400; font-family: Calibri, opensans, sans-serif; font-size: 1.1rem; line-height: 1.5; color:#212529; background-color: #FFFFFF; background-clip: padding-box; border: 1px solid #ced4da; appearance: none; border-radius: .25rem;" name="IssueDescription" type="text" rows="10" wrap="VIRTUAL" required="Yes"></textarea>
+                <br>
+                <br>
+                <label name="PhoneNumber">Enter your phone number.</label>
+                <br>
+                <input style="display: block; width: 100%; padding: .375rem .75rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color:#212529; background-color: #FFFFFF; background-clip: padding-box; border: 1px solid #ced4da; appearance: none; border-radius: .25rem;" name = "PhoneNumber" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="000-000-0000" required>
+                <br>
+                <input type="hidden" id="Latitude" name="Latitude" placeholder="Latitude">
+                <input type="hidden" id="Longitude" name="Longitude" placeholder="Longitude">
+                <input type="hidden" id="TrueLoc" name="TrueLocation" placeholder="True Location?">
+                <button style="margin-bottom:1rem !important; cursor:pointer; display: inline-block; font-weight: 400; line-height: 1.5; text-align: center; vertical-align: middle; border: 1px solid transparent; padding: .375rem .75rem; border-radius: .25rem; transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; color: #FFFFFF; background-color: #00834e; letter-spacing: 1px; font-size:1rem;" type="submit" onclick= "draw" >Submit</button>
+              </form>
+        <br>      
+        </div>
+        <!--Add image-->
+        <div style = "width:170px; height:140px; top: 8px; left: 120px; float:right">
+            <img style="margin: 0px 0px 0px 0px"src="/Users/annamagistrale/Desktop/GEOM_4005/Course_Material/3/A2Files/Meeting/General Park/images/B_Logo_H-RGBRedBlackonLight72_130821.png" width="170" height="100"  alt="Carleton University Logo">
+        </div>
+
+        <!--Sheetrock method to log data to console-->
+        <div id = 'display'></div>
+        <script>
+            
+            const geolocation = () => {
+                if('geolocation' in navigator){
+                    navigator.geolocation.getCurrentPosition(success, error);
+                    
+                }
+            } 
+
+            function success(position){
+                console.log(position);
+                var lati = position.coords.latitude
+                var longi = position.coords.longitude
+                document.getElementById("Latitude").value = lati;
+                document.getElementById("Longitude").value = longi;
+                document.getElementById("TrueLoc").value = 'Yes';
+                //marker.setLngLat([longi, lati]).addTo(map)
+
+            }
+
+            var Fitz = L.polygon([
+                [ -76.210633700000031, 45.481354400000569 ], [ -76.213323600000024, 45.479699500000578 ], [ -76.213891500000017, 45.47935020000056 ], [ -76.215122400000027, 45.478592900000578 ], [ -76.216132, 45.477943100000566 ], [ -76.216384400000024, 45.477778300000566 ], [ -76.220358100000027, 45.475524500000589 ], [ -76.220406200000028, 45.475494100000574 ], [ -76.223202400000034, 45.473905700000579 ], [ -76.223289700000024, 45.473933300000567 ], [ -76.223571, 45.474067400000585 ], [ -76.223698100000021, 45.474146900000576 ], [ -76.223724100000027, 45.47416460000057 ], [ -76.224004, 45.474404600000582 ], [ -76.224069500000027, 45.47447590000057 ], [ -76.224168500000033, 45.474596500000573 ], [ -76.224267, 45.474669900000578 ], [ -76.224310800000026, 45.474703600000574 ], [ -76.224545200000023, 45.474890100000586 ], [ -76.22481470000001, 45.475166500000583 ], [ -76.224920200000028, 45.475309400000569 ], [ -76.224988800000034, 45.475412700000568 ], [ -76.225015300000024, 45.475457400000586 ], [ -76.225038100000035, 45.475497500000586 ], [ -76.225131, 45.475727400000579 ], [ -76.225165800000028, 45.475965300000581 ], [ -76.225167, 45.47601930000058 ], [ -76.225162700000027, 45.476060800000575 ], [ -76.225213900000028, 45.476104800000563 ], [ -76.225253, 45.476140400000581 ], [ -76.225441600000011, 45.476348000000577 ], [ -76.225481200000033, 45.476401500000584 ], [ -76.225572600000035, 45.476544900000576 ], [ -76.225665500000034, 45.476774800000577 ], [ -76.225668700000028, 45.476796700000577 ], [ -76.225974, 45.477060900000573 ], [ -76.226020900000023, 45.477111200000572 ], [ -76.226104300000031, 45.477173300000587 ], [ -76.226190900000034, 45.477177700000567 ], [ -76.226520500000035, 45.47723600000058 ], [ -76.226830600000028, 45.477333700000578 ], [ -76.226903200000024, 45.477363600000579 ], [ -76.227045300000029, 45.477425100000566 ], [ -76.227254, 45.477529400000577 ], [ -76.227498, 45.477695800000575 ], [ -76.2276972, 45.477889500000579 ], [ -76.227845500000015, 45.478104700000571 ], [ -76.227938400000028, 45.478334600000579 ], [ -76.227973200000022, 45.478572500000581 ], [ -76.227948800000021, 45.478810900000553 ], [ -76.227929500000016, 45.478866300000583 ], [ -76.227966700000025, 45.478913200000576 ], [ -76.228032600000034, 45.47900250000059 ], [ -76.228124, 45.47914580000058 ], [ -76.228213700000026, 45.479367600000586 ], [ -76.226906900000031, 45.481039000000564 ], [ -76.22694810000003, 45.481094800000577 ], [ -76.226952600000018, 45.481301800000573 ], [ -76.227084, 45.481462400000574 ], [ -76.227264500000032, 45.481523500000584 ], [ -76.227318, 45.481630900000589 ], [ -76.227257400000028, 45.481784600000573 ], [ -76.227273300000022, 45.481928500000578 ], [ -76.227367300000012, 45.482134500000576 ], [ -76.227373900000032, 45.482151700000578 ], [ -76.228679100000022, 45.480463600000576 ], [ -76.228769900000032, 45.480606100000585 ], [ -76.228803300000024, 45.480688600000576 ], [ -76.228938, 45.480819600000572 ], [ -76.229086300000034, 45.481034700000578 ], [ -76.229104600000028, 45.48106990000057 ], [ -76.229158300000023, 45.481175600000569 ], [ -76.229348800000025, 45.481185300000568 ], [ -76.229678400000026, 45.481243600000568 ], [ -76.229988600000013, 45.481341300000565 ], [ -76.230269900000025, 45.481475500000577 ], [ -76.230397100000033, 45.481554900000575 ], [ -76.230553, 45.48166130000056 ], [ -76.23066980000003, 45.481748200000588 ], [ -76.230869, 45.481942000000572 ], [ -76.230971500000024, 45.482079800000562 ], [ -76.231103900000022, 45.482285400000578 ], [ -76.231142900000023, 45.482350300000576 ], [ -76.231222800000026, 45.482493400000571 ], [ -76.231302700000029, 45.482636600000575 ], [ -76.231358200000031, 45.48275050000057 ], [ -76.231425700000031, 45.482911800000579 ], [ -76.231443900000031, 45.483020500000571 ], [ -76.231472100000033, 45.483061300000585 ], [ -76.231565100000026, 45.483291300000573 ], [ -76.231572700000029, 45.48332080000057 ], [ -76.231600800000024, 45.483437500000569 ], [ -76.231610700000033, 45.483561300000581 ], [ -76.231649900000022, 45.483659400000583 ], [ -76.231684700000031, 45.483897200000591 ], [ -76.231660200000022, 45.484135700000579 ], [ -76.231652700000026, 45.484166600000577 ], [ -76.231617200000031, 45.484302000000575 ], [ -76.23159950000003, 45.484342000000581 ], [ -76.231605700000031, 45.484384200000569 ], [ -76.23158130000003, 45.484622600000577 ], [ -76.231573700000027, 45.484653500000576 ], [ -76.231550100000035, 45.484743800000579 ], [ -76.231474700000035, 45.484944800000584 ], [ -76.231335800000025, 45.485163000000561 ], [ -76.231274500000026, 45.48522660000058 ], [ -76.231289800000013, 45.485258800000587 ], [ -76.231355900000025, 45.485435800000566 ], [ -76.23139070000002, 45.485673700000582 ], [ -76.231366200000025, 45.485912100000576 ], [ -76.231291400000032, 45.486121300000583 ], [ -76.231241600000018, 45.486378900000581 ], [ -76.231182500000031, 45.486520600000574 ], [ -76.226607600000023, 45.488125100000559 ], [ -76.226338800000022, 45.488211200000585 ], [ -76.226217900000023, 45.489184600000584 ], [ -76.225661700000032, 45.489721700000565 ], [ -76.225374900000034, 45.490255800000575 ], [ -76.225289300000014, 45.490651100000562 ], [ -76.222241100000033, 45.492598700000578 ], [ -76.219644100000025, 45.490631100000556 ], [ -76.219577800000025, 45.490581200000577 ], [ -76.219562800000034, 45.490588100000565 ], [ -76.218790400000032, 45.489917800000576 ], [ -76.21879, 45.489917800000583 ], [ -76.218102700000031, 45.490320900000576 ], [ -76.21542730000003, 45.488145500000577 ], [ -76.213798800000035, 45.486759400000565 ], [ -76.213796900000034, 45.486757900000562 ], [ -76.213780800000023, 45.486746900000583 ], [ -76.213762300000027, 45.486738000000585 ], [ -76.213741800000022, 45.486731600000567 ], [ -76.213735100000022, 45.486730400000582 ], [ -76.213734900000034, 45.486729000000572 ], [ -76.213728700000033, 45.486713800000572 ], [ -76.213719, 45.486699600000577 ], [ -76.213707500000027, 45.486688200000557 ], [ -76.210530200000022, 45.483996300000577 ], [ -76.210633700000031, 45.481354400000569 ]
+            ]);
+            var bounds = Fitz.getBounds();
+            var xmax = bounds.getEast();
+            var xmin = bounds.getWest();
+            var ymax = bounds.getSouth();
+            var ymin = bounds.getNorth();
+            var lat = ymin + (Math.random() * (ymax-ymin));
+            console.log(lat);
+            var lng = xmin + (Math.random() * (xmax-xmin));
+            console.log(lng);
+
+            function error(){
+                
+                document.getElementById("Latitude").value = lng;
+                document.getElementById("Longitude").value = lat;
+                document.getElementById("TrueLoc").value = 'No';
+                //marker.setLngLat([lat, lng]).addTo(map)
+            }
+          
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyMGnM7tqyd6PXlO5rhI5Nbpia4G2Mcn6XS-vedRctoOpd0as7pqaDpcWz6Hf86VuQ/exec'
+            const form = document.forms['submit-to-google-sheet']
+              
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => console.log('Success!', response))
+                .catch(error => console.error('Error!', error.message))
+                })
+                
+        </script>
+    </body>
+</html>
