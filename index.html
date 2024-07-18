@@ -51,7 +51,7 @@
         <div class = 'div2' style="width: 90%; padding-right: .75rem; padding-left: .75rem">
             <p style='font-family: Calibri, opensans, sans-serif; font-size: 1.3rem; text-align:center'><b>First click the location button and allow your location to provide us with the coordinates of the issue. </b></p>
             <div style ="text-align:center">
-            <button style=" margin-bottom:1rem !important; cursor:pointer; display: inline-block; font-weight: 500; line-height: 2; text-align: center; vertical-align: middle; border: 1.5px solid transparent; padding: .650rem 1.25rem; border-radius: .75rem; transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; color: #FFFFFF; font-size: 1.25rem; background-color: #00834e; letter-spacing: 1.25px;" class = 'get-location' onclick = 'geolocation()'>Location</button>
+            <button style=" margin-bottom:1rem !important; cursor:pointer; display: inline-block; font-weight: 500; line-height: 2; text-align: center; vertical-align: middle; border: 1.5px solid transparent; padding: .650rem 1.25rem; border-radius: .75rem; transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; color: #FFFFFF; font-size: 1.25rem; background-color: #00834e; letter-spacing: 1.25px;" class = 'get-location' onclick = "getLocation()">Location</button>
             </div>
             <br>
             <br>
@@ -95,7 +95,7 @@
                 <input type="hidden" id="Latitude" name="Latitude" placeholder="Latitude">
                 <input type="hidden" id="Longitude" name="Longitude" placeholder="Longitude">
                 <input type="hidden" id="TrueLoc" name="TrueLocation" placeholder="True Location?">
-                <button style="margin-bottom:1rem !important; cursor:pointer; display: inline-block; font-weight: 400; line-height: 1.5; text-align: center; vertical-align: middle; border: 1px solid transparent; padding: .375rem .75rem; border-radius: .25rem; transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; color: #FFFFFF; background-color: #00834e; letter-spacing: 1px; font-size:1rem;" type="submit" >Submit</button>
+                <button style="margin-bottom:1rem !important; cursor:pointer; display: inline-block; font-weight: 400; line-height: 1.5; text-align: center; vertical-align: middle; border: 1px solid transparent; padding: .375rem .75rem; border-radius: .25rem; transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; color: #FFFFFF; background-color: #00834e; letter-spacing: 1px; font-size:1rem;" type="submit" onclick= "draw" >Submit</button>
               </form>
         <br>      
         </div>
@@ -108,15 +108,16 @@
         <div id = 'display'></div>
         <script>
             
-            const geolocation = () => {
-                if('geolocation' in navigator){
-                    navigator.geolocation.getCurrentPosition(success, error);
-                    
+            function getLocation(){
+                if (navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(success);
                 }
-            } 
+                else{
+                    error
+                }
+            }
 
             function success(position){
-                console.log(position);
                 var lati = position.coords.latitude
                 var longi = position.coords.longitude
                 document.getElementById("Latitude").value = lati;
@@ -139,6 +140,8 @@
             var lng = xmin + (Math.random() * (xmax-xmin));
             console.log(lng);
 
+            
+
             function error(){
                 
                 document.getElementById("Latitude").value = lng;
@@ -146,11 +149,11 @@
                 document.getElementById("TrueLoc").value = 'No';
                 //marker.setLngLat([lat, lng]).addTo(map)
             }
-            
+
             function redirect(){
                 window.location.href = "https://amagistrale.github.io/FPPReportingMap/"
             }
-            
+          
             const scriptURL = 'https://script.google.com/macros/s/AKfycbyMGnM7tqyd6PXlO5rhI5Nbpia4G2Mcn6XS-vedRctoOpd0as7pqaDpcWz6Hf86VuQ/exec'
             const form = document.forms['submit-to-google-sheet']
               
@@ -159,9 +162,10 @@
                 fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => console.log('Success!', response))
                 .catch(error => console.error('Error!', error.message));
-                setTimeout(redirect; 5000);
-                })
-            
+                setTimeout(redirect, 7000);
+                
+                });
+                
         </script>
     </body>
 </html>
