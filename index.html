@@ -110,11 +110,9 @@
             
             function getLocation(){
                 if (navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(success);
+                    navigator.geolocation.getCurrentPosition(success, error);
                 }
-                else{
-                    error()
-                }
+                
             }
 
             function success(position){
