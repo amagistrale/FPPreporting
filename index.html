@@ -161,7 +161,6 @@
                 .then(response => console.log('Success!', response))
                 .catch(error => console.error('Error!', error.message));
                 document.getElementById("button").disabled = true;
-                document.getElementById("button").value = "Loading...";
                 setTimeout(redirect, 7000);
                 
                 });
