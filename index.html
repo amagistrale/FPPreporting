@@ -156,6 +156,7 @@
           
             const scriptURL = 'https://script.google.com/macros/s/AKfycbyMGnM7tqyd6PXlO5rhI5Nbpia4G2Mcn6XS-vedRctoOpd0as7pqaDpcWz6Hf86VuQ/exec'
             const form = document.forms['submit-to-google-sheet']
+            const change = document.getElementById("button");
               
             form.addEventListener('submit', e => {
                 e.preventDefault()
@@ -163,6 +164,7 @@
                 .then(response => console.log('Success!', response))
                 .catch(error => console.error('Error!', error.message));
                 document.getElementById("button").disabled = true;
+                changeText.textContent = "Loading..."
                 setTimeout(redirect, 7000);
                 
                 });
